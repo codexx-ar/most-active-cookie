@@ -2,6 +2,7 @@ package com.quantcast.evaluation.processor;
 
 import com.quantcast.evaluation.handlers.CookieCounterHandler;
 import com.quantcast.evaluation.handlers.DataHandler;
+import com.quantcast.evaluation.model.CookieCounter;
 import com.quantcast.evaluation.util.OutputUtil;
 
 import java.io.IOException;

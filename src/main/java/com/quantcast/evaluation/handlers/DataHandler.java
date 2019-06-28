@@ -11,10 +11,13 @@ public class DataHandler {
 
     private List<String> activeCookieRecords = new ArrayList<>();
 
-    private static DataHandler instance = new DataHandler();
+    private static DataHandler instance;
 
     public static void readAllCookiesByDate(final String fileName,
                                                     final String date) throws IOException {
+        // TODO: can be optimized further to read first and last line
+        // to check if date present in given file
+        instance = new DataHandler();
         final RandomAccessFile randomAccessFile = new RandomAccessFile(fileName, "r");
         if(randomAccessFile.length() < 2) {
             throw new IOException();

@@ -1,14 +1,11 @@
 package com.quantcast.evaluation.model;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class CookieCounter {
 
     private final Map<String, Integer> allActiveCookiesCounter = new HashMap<>();
-    private final Map<String, Integer> mostActiveCookiesCounter = new HashMap<>();
-
-    private int highestCookieCount;
 
     public void addCookie(final String cookieValue) {
         if(allActiveCookiesCounter.containsKey(cookieValue)) {
@@ -17,21 +14,20 @@ public class CookieCounter {
         else {
             allActiveCookiesCounter.put(cookieValue, 1);
         }
-        updateMostActiveCookieCounter(allActiveCookiesCounter.get(cookieValue), cookieValue);
     }
 
-    private void updateMostActiveCookieCounter(final int currentCookieCount,
-                                               final String cookieValue) {
-        if(currentCookieCount > highestCookieCount) {
-            highestCookieCount = currentCookieCount;
-            mostActiveCookiesCounter.clear();
-            mostActiveCookiesCounter.put(cookieValue, currentCookieCount);
-        } else if (currentCookieCount == highestCookieCount) {
-            mostActiveCookiesCounter.put(cookieValue, currentCookieCount);
+    public List<String> fetchActiveCookies() {
+        // TODO: can be optimized further with a reduce
+        final List<String> mostActiveCookies = new ArrayList<>();
+        if(allActiveCookiesCounter.size() > 0) {
+            Map<String, Integer> result = allActiveCookiesCounter.entrySet().stream()
+                    .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                            (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+            final int highest = (Integer) result.values().toArray()[0];
+            result.entrySet().stream().filter(x -> x.getValue() == highest)
+                    .forEach(x -> mostActiveCookies.add(x.getKey()));
         }
-    }
-
-    public Map<String,Integer> fetchActiveCookies() {
-        return mostActiveCookiesCounter;
+        return mostActiveCookies;
     }
 }

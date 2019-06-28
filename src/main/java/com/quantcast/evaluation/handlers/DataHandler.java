@@ -26,7 +26,6 @@ public class DataHandler {
         String line;
         boolean firstLineFound = false;
         while((line = randomAccessFile.readLine()) != null) {
-            OutputUtil.debug("Line being processed from file: " + line);
             line = line.trim();
             if(!line.isEmpty() && line.contains(date)) {
                 firstLineFound = true;

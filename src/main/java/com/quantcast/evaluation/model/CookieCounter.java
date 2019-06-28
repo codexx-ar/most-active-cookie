@@ -12,6 +12,10 @@ public class CookieCounter {
 
     private final Map<String, Integer> allActiveCookiesCounter = new HashMap<>();
 
+    /**
+     * Add a new cookie to the list of active cookies
+     * @param cookieValue the cookie value to add
+     */
     public void addCookie(final String cookieValue) {
         if(allActiveCookiesCounter.containsKey(cookieValue)) {
             allActiveCookiesCounter.put(cookieValue, allActiveCookiesCounter.get(cookieValue) + 1);
@@ -21,6 +25,10 @@ public class CookieCounter {
         }
     }
 
+    /**
+     * fetch all calculated most active cookies
+     * @return most active cookies
+     */
     public List<String> fetchActiveCookies() {
         // TODO: can be optimized further with a reduce
         final List<String> mostActiveCookies = new ArrayList<>();

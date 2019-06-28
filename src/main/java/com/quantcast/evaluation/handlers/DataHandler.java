@@ -13,6 +13,12 @@ public class DataHandler {
 
     private static DataHandler instance;
 
+    /**
+     * Read file to get active cookies for the date and store in memory
+     * @param fileName - the file with cookies
+     * @param date - the date to process by
+     * @throws IOException
+     */
     public static void readAllCookiesByDate(final String fileName,
                                                     final String date) throws IOException {
         // TODO: can be optimized further to read first and last line
@@ -37,6 +43,10 @@ public class DataHandler {
         }
     }
 
+    /**
+     * Return a list of all active cookie records for said date.
+     * @return active cookie records
+     */
     public static List<String> fetchActiveCookieRecords() {
         return instance.activeCookieRecords;
     }
